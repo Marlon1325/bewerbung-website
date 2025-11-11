@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+*{
+    scroll-behavior: smooth;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+:root {
+  --A-950: oklch(13% 0.028 261.692);
+  --A-900: oklch(21% 0.034 264.665);
+  --A-800: oklch(27.8% 0.033 256.848);
+  --A-700: oklch(37.3% 0.034 259.733);
+  --A-600: oklch(44.6% 0.03 256.802);
+  --A-500: oklch(55.1% 0.027 264.364);
+  --A-400: oklch(70.7% 0.022 261.325);
+  --A-300: oklch(87.2% 0.01 258.338);
+  --A-200: oklch(92.8% 0.006 264.531);
+  --A-100: oklch(96.7% 0.003 264.542);
+  --A-50: oklch(98.5% 0.002 247.839);
+
+  --B-950: oklch(28.2% 0.091 267.935);
+  --B-900: oklch(37.9% 0.146 265.522);
+  --B-800: oklch(42.4% 0.199 265.638);
+  --B-700: oklch(48.8% 0.243 264.376);
+  --B-600: oklch(54.6% 0.245 262.881);
+  --B-500: oklch(62.3% 0.214 259.815);
+  --B-400: oklch(70.7% 0.165 254.624);
+  --B-300: oklch(80.9% 0.105 251.813);
+  --B-200: oklch(88.2% 0.059 254.128);
+  --B-100: oklch(93.2% 0.032 255.585);
+  --B-50: oklch(97% 0.014 254.604);
+
+}
+
+.nav{
+  background-color: var(--A-900);
+}
+
+.card{
+  background-color: var(--A-800);
+}
+
+.text-1{
+  color: var(--A-50);
+}
+
+.link{
+  color: var(--B-500);
+}
+.link:hover{
+  color: var(--A-50);
+}
+
+.button{
+  color: var(--A-600);
+}
+
+.button:hover{
+  color: var(--A-700);
+}
+button:focus {
+  outline: none; 
+  box-shadow: 0 0 0 3px var(--B-800);
+  border-radius: 0.5rem;
+}

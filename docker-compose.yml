@@ -1,0 +1,55 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    env_file:
+      - ./api/.env
+    expose:
+      - "3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: api_bewerbung:latest
+    container_name: fastapi_app
+    restart: always
+    expose:
+      - "8000"
+    env_file:
+      - ./api/.env
+    environment:
+      - VIRTUAL_HOST=api.marloneulberg.de
+    depends_on:
+      - db
+
+  website:
+    build: 
+      context: ./website
+      dockerfile: Dockerfile
+    image: website_bewerbung:latest
+    container_name: website
+    restart: always
+    depends_on:
+      - api
+    expose:
+      - "3000"
+    environment:
+      - VIRTUAL_HOST=marloneulberg.de
+
+  nginx-proxy:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+volumes:
+  db_data:
