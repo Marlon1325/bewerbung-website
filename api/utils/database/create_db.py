@@ -89,7 +89,7 @@ class Backup:
     def toZip(self)->dict[str, io.BytesIO]:
         files = {}
         with self.engine.begin() as con:
-            for table in list(self.tables)+["skills"]:
+            for table in self.tables:
                 df = pd.read_sql_table(table, con)
                 if table == "user":
                     df = df[df["admin"].map(lambda x: not x)]
