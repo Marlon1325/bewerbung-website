@@ -7,14 +7,17 @@ export default function Skills(){
     const [data, setData] = useState<any[][]>([]);
     useEffect(()=>{
         async function getData(){
-        try{
-            const response = await api.get("/resume/skills", {withCredentials: true });
-            setData(response.data);
-            console.log(response.data);
-        }
-        catch(error:any){
-            console.error(error); 
-        }
+            const key = "skills";
+            const data = sessionStorage.getItem(key);
+            if (data) setData(JSON.parse(data));
+            else try{
+                const response = await api.get("/resume/skills", {withCredentials: true });
+                setData(response.data);
+                sessionStorage.setItem(key, JSON.stringify(response.data));
+            }
+            catch(error:any){
+                console.error(error); 
+            }
         }
         getData();
     }, [])
