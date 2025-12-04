@@ -1,5 +1,5 @@
 
-from sqlalchemy import Column, Integer, String, Text, LargeBinary, SmallInteger, CheckConstraint, Boolean, text
+from sqlalchemy import Column, Integer, String, Text, LargeBinary, SmallInteger, CheckConstraint, Boolean, text, JSON
 from sqlalchemy.orm import declarative_base, registry
 from .engine import new_engine, new_engine_without_table, DB_NAME
 import os
@@ -52,6 +52,12 @@ class Resume(Base):
         CheckConstraint("category in ('Schulbildung', 'Praktika')", name="check_category"),
     )
 
+class Skills(Base):
+    __tablename__ = "skills"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(30), nullable=False)
+    value = Column(JSON, nullable=False)
+
 
 class Contact(Base):
     __tablename__ = "contact"
@@ -83,7 +89,7 @@ class Backup:
     def toZip(self)->dict[str, io.BytesIO]:
         files = {}
         with self.engine.begin() as con:
-            for table in self.tables:
+            for table in list(self.tables)+["skills"]:
                 df = pd.read_sql_table(table, con)
                 if table == "user":
                     df = df[df["admin"].map(lambda x: not x)]

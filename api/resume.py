@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import ORJSONResponse
 from utils import *
 from utils.types import *
-from typing import get_args
+from typing import get_args, Any
+import json
 
 # init   ##################################################################
 
@@ -61,3 +62,10 @@ async def get_uni_grades(con:sql.Connection=Depends(sql.connect_db)):
     return data
 
 
+@router.get("/skills", response_model=list[tuple[str, Any]])
+async def skills(con:sql.Connection=Depends(sql.connect_db)):
+    query = sql.text("SELECT name, value FROM skills")
+    result = await con.execute(query)
+    data = sql.to_tuple(result)
+    data = [(x,json.loads(y)) for x,y in data]
+    return data
