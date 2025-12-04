@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react"
-import { Input, Button, Header, Card, Select, Toggle } from "@/components"
+import { Input, Button, Header, Card, Select, Toggle, Textarea } from "@/components"
 import {Alert, api} from "@/utils";
 import type { ResumeCategory } from "@/utils/types";
 
@@ -19,7 +19,7 @@ export default function Resume(){
     const [formData, setFormData] = useState<FormData_>(emptyFormData);
     const [withDay, setWithDay] = useState<boolean>(true);
 
-const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+const handleChange = (e: React.ChangeEvent<any>) => {
       const { name, value } = e.target;
        setFormData((prev) => ({
         ...prev,
@@ -82,7 +82,7 @@ const handleSubmit = async (event: React.FormEvent) => {
                 <option className="text-[var(--A-50)]" value="Praktika">Praktika</option>
             </Select>
             <Input type="text" value={formData.title ?? "" } onChange={handleChange} name="title" label="Titel" required/>
-            <Input type="text" value={formData.subtitle ?? ""} onChange={handleChange} name="subtitle" label="Untertitel"/>
+            <Textarea value={formData.subtitle ?? ""} rows={2} onChange={handleChange} name="subtitle" label="Untertitel"/>
 
             <Button type="submit">hinzufügen</Button>
         </form>

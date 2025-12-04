@@ -19,7 +19,6 @@ export default function Skills(){
         getData();
     }, [])
     return(
-        // <div className="text-white grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
         <div className="text-white grid md:grid-cols-[1fr_1fr_40%] grid-cols-1 gap-4 w-full">
             {
                 data.map((value, idx)=>(

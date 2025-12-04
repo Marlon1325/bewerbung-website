@@ -28,10 +28,17 @@ Timeline.Entry =  ({title, subtitle, date}:Entry)=>(
                      {date}
                 </time>
                 <h3 className="text-lg font-semibold text-[var(--A-50)] w-full md:w-4/5 lg:w-full">{ title}</h3>
-                 <div className="text-base font-normal text-[var(--A-400)]">{subtitle}</div>
+                {subtitle && 
+                <div className="text-base font-normal text-[var(--A-400)] flex flex-col">
+                      {String(subtitle)
+                            .split("\n")
+                            .map((line, i) => (
+                              <span key={i}>{line}</span>
+                            ))}
+                </div>}
 
         </li>
-    )
+)
 
 
 
