@@ -74,7 +74,7 @@ class Backup:
         if not os.path.exists(self.folder_path):
             raise FileNotFoundError(f"Folder not found | {self.folder_path}")
         
-        self.files = filter(lambda x: x.endswith(".parquet"), os.listdir(self.folder_path))
+        self.files = filter(lambda x: x.endswith(".csv"), os.listdir(self.folder_path))
         self.tables = map(lambda x: os.path.splitext(x)[0] , self.files)
          
     def load(self):
@@ -82,7 +82,7 @@ class Backup:
             for file in self.files:
                 table = os.path.splitext(file)[0]
                 con.execute(text(f"DELETE FROM {table}"))
-                df = pd.read_parquet(os.path.join(self.folder_path, file))
+                df = pd.read_csv(os.path.join(self.folder_path, file))
                 df.to_sql(table, con, index=False, if_exists="append")
                 print(f"Loaded table: {table} ({len(df)} rows)")
 
@@ -94,8 +94,8 @@ class Backup:
                 if table == "user":
                     df = df[df["admin"].map(lambda x: not x)]
                 file = io.BytesIO()
-                df.to_parquet(file)
-                files[f"{table}.parquet"] = file
+                df.to_csv(file)
+                files[f"{table}.csv"] = file
 
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
